@@ -2452,9 +2452,10 @@
       "damage" : 2009,
       "elite" : true,
       "ingredients" : [
-        "Obsidian",
-        "Diamond Cullinan",
-        "Great Diamond"
+        "Perfect Diamond",
+        "Perfect Diamond",
+        "Perfect Diamond",
+        "Perfect Diamond"
       ],
       "line" : "Secret · Ultimate",
       "name" : "The Great Stone",
