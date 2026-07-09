@@ -99,6 +99,14 @@
   footer a { margin: 0 10px; }
 
   @media (prefers-reduced-motion: reduce) { .snow { display: none; } .btn { transition: none; } }
+
+  /* "coming soon" toast for the not-yet-live TestFlight link */
+  #toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+    background: var(--panel); border: 1px solid var(--frost-deep); color: var(--text);
+    padding: 12px 22px; border-radius: 14px; font-size: .95rem; opacity: 0;
+    transition: opacity .25s ease, transform .25s ease; pointer-events: none; z-index: 10;
+    box-shadow: 0 10px 30px rgba(0,0,0,.5); max-width: 90vw; text-align: center; }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -173,7 +181,16 @@
 </footer>
 </div>
 
+<div id="toast" role="status">❄️ The beta opens very soon — the TestFlight link will appear right here.</div>
 <script>
+  // TestFlight placeholder: until the public link is wired in, tapping shows an honest "soon" toast.
+  const toast = document.getElementById('toast'); let toastTimer;
+  document.querySelectorAll('a[href="#testflight"]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    toast.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+  }));
+
   // Faint drifting snow — the game's icy signature, kept subtle.
   const c = document.getElementById('snow'), x = c.getContext('2d');
   let W, H, flakes;
