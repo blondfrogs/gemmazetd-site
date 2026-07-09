@@ -45,8 +45,8 @@ for t in towers:
         tower_rows.append(f"<tr class='group'><td colspan='6'>{esc(t['line'])}</td></tr>")
         last_line = t["line"]
     name = esc(t["name"]) + (" <span class='elite'>★</span>" if t["elite"] else "")
-    recipe = ("<i class='secret'>Secret — single-roll only</i>" if t["secret"]
-              else esc(" + ".join(t["ingredients"])))
+    recipe = esc(" + ".join(t["ingredients"]))
+    if t["secret"]: recipe += " <span class='chip abil'>Secret</span>"
     tower_rows.append(
         f"<tr><td class='namecell'><img src='data/thumbs/tower-{esc(t['slug'])}.png' alt='' width='34' height='34'>{name}</td>"
         f"<td>{recipe}</td><td class='num'>{num(t['damage'])}</td><td class='num'>{spd(t['cooldown'])}</td>"

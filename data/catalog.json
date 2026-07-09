@@ -2315,7 +2315,9 @@
       "damage" : 820,
       "elite" : true,
       "ingredients" : [
-
+        "Perfect Sapphire",
+        "Perfect Topaz",
+        "Perfect Diamond"
       ],
       "line" : "Secret · Ultimate",
       "name" : "Obsidian",
@@ -2330,7 +2332,9 @@
       "damage" : 430,
       "elite" : true,
       "ingredients" : [
-
+        "Perfect Aquamarine",
+        "Perfect Opal",
+        "Perfect Emerald"
       ],
       "line" : "Secret · Ultimate",
       "name" : "Agate",
@@ -2345,7 +2349,9 @@
       "damage" : 1225,
       "elite" : true,
       "ingredients" : [
-
+        "Perfect Emerald",
+        "Perfect Sapphire",
+        "Perfect Ruby"
       ],
       "line" : "Secret · Ultimate",
       "name" : "Fantastic Miss Shrimp",
@@ -2360,7 +2366,10 @@
       "damage" : 300,
       "elite" : true,
       "ingredients" : [
-
+        "Perfect Sapphire",
+        "Perfect Emerald",
+        "Flawless Sapphire",
+        "Flawless Emerald"
       ],
       "line" : "Secret · Ultimate",
       "name" : "Geluanshi",
@@ -2375,7 +2384,10 @@
       "damage" : 0,
       "elite" : true,
       "ingredients" : [
-
+        "Perfect Ruby",
+        "Flawless Ruby",
+        "Perfect Amethyst",
+        "Flawless Amethyst"
       ],
       "line" : "Secret · Ultimate",
       "name" : "The Burning Stone",
@@ -2390,7 +2402,11 @@
       "damage" : 6,
       "elite" : true,
       "ingredients" : [
-
+        "Chipped Opal",
+        "Flawed Opal",
+        "Regular Opal",
+        "Flawless Opal",
+        "Perfect Opal"
       ],
       "line" : "Secret · Ultimate",
       "name" : "Ehome",
@@ -2405,7 +2421,11 @@
       "damage" : 512,
       "elite" : true,
       "ingredients" : [
-
+        "Chipped Topaz",
+        "Flawed Topaz",
+        "Regular Topaz",
+        "Flawless Topaz",
+        "Perfect Topaz"
       ],
       "line" : "Secret · Ultimate",
       "name" : "Wings Stone",
@@ -2420,7 +2440,9 @@
       "damage" : 2009,
       "elite" : true,
       "ingredients" : [
-
+        "Obsidian",
+        "Diamond Cullinan",
+        "Great Diamond"
       ],
       "line" : "Secret · Ultimate",
       "name" : "The Great Stone",
