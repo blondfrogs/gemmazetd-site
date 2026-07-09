@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gem Maze TD — the classic Gem TD, rebuilt for iPhone &amp; iPad</title>
+<meta name="description" content="A faithful native remake of the legendary WC3/Dota tower defense. Place 5 random gems, keep one — the rest become your maze. 50 waves, 47 craftable towers, iPhone & iPad.">
+<meta property="og:title" content="Gem Maze TD">
+<meta property="og:description" content="The classic Gem TD, rebuilt natively for iPhone & iPad. Beta open now.">
+<meta property="og:image" content="https://gemmazetd.com/assets/icon.png">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<style>
+  /* ============================================================
+     CONFIG — the two links to wire up before/at launch:
+     1) TestFlight public link: search for href="#testflight"
+     2) Email list: search for KIT-FORM and paste the Kit embed
+     ============================================================ */
+  :root {
+    --bg: #0B1626; --bg2: #0E1D33; --panel: #14263F; --line: #23405F;
+    --text: #EAF3FC; --dim: #97AFC7; --frost: #A8D4FF; --frost-deep: #5FA8E8;
+    --go: #4ADE80; --go-deep: #16A34A;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Avenir Next", Avenir, -apple-system, system-ui, sans-serif;
+    line-height: 1.55;
+    background-image: radial-gradient(1100px 500px at 50% -10%, #16304F 0%, transparent 62%);
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+  a { color: var(--frost); }
+
+  /* falling snow, very faint — the game's icy signature */
+  .snow { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .content { position: relative; z-index: 1; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 72px 0 30px; }
+  .hero img.icon { width: 108px; height: 108px; border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(95,168,232,.35), 0 2px 8px rgba(0,0,0,.5); }
+  h1 { font-size: clamp(2.1rem, 6vw, 3.2rem); font-weight: 800; letter-spacing: -.015em;
+       margin: 22px 0 0; text-wrap: balance;
+       background: linear-gradient(180deg, #FFFFFF 20%, var(--frost) 90%);
+       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .tag { font-size: clamp(1.02rem, 2.6vw, 1.25rem); color: var(--dim); max-width: 34em; margin: 14px auto 0; text-wrap: balance; }
+  .tag b { color: var(--text); font-weight: 600; }
+  .heritage { display: inline-block; margin-top: 18px; font-size: .82rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--frost);
+    border: 1px solid var(--line); border-radius: 99px; padding: 6px 16px; background: rgba(20,38,63,.6); }
+
+  .ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+  .btn { display: inline-block; font-weight: 700; font-size: 1.02rem; text-decoration: none;
+    padding: 14px 28px; border-radius: 14px; transition: transform .15s ease, box-shadow .15s ease; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-beta { color: #06240F; background: linear-gradient(180deg, var(--go), var(--go-deep));
+    box-shadow: 0 6px 24px rgba(74,222,128,.28); }
+  .btn-notify { color: var(--frost); border: 1.5px solid var(--line); background: rgba(20,38,63,.6); }
+  .ctanote { color: var(--dim); font-size: .85rem; margin-top: 12px; }
+
+  /* THE HOOK */
+  .hook { margin: 64px auto 0; max-width: 640px; text-align: center; }
+  .hook h2 { font-size: 1.5rem; font-weight: 800; margin: 0 0 10px; color: var(--frost); }
+  .hook p { color: var(--dim); margin: 0; font-size: 1.05rem; }
+  .hook p b { color: var(--text); }
+
+  /* SCREENSHOTS */
+  .shots { display: flex; gap: 22px; justify-content: center; align-items: flex-start;
+    flex-wrap: wrap; margin: 56px 0 0; }
+  .shot { width: min(270px, 78vw); border-radius: 30px; border: 1px solid var(--line);
+    box-shadow: 0 18px 50px rgba(0,0,0,.5); }
+  .shot-mid { margin-top: 34px; }
+  @media (max-width: 900px) { .shot-mid { margin-top: 0; } }
+
+  /* FEATURES */
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px; margin: 64px 0 0; }
+  .feat { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  .feat .n { font-size: 1.6rem; font-weight: 800; color: var(--frost); font-variant-numeric: tabular-nums; }
+  .feat h3 { margin: 4px 0 6px; font-size: 1.02rem; }
+  .feat p { margin: 0; color: var(--dim); font-size: .92rem; }
+
+  /* HERITAGE */
+  .story { margin: 72px auto 0; max-width: 640px; }
+  .story h2 { color: var(--frost); font-size: 1.4rem; }
+  .story p { color: var(--dim); }
+  .story p b { color: var(--text); }
+
+  /* NOTIFY */
+  .notify { margin: 72px auto 0; max-width: 560px; text-align: center;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 34px 26px; }
+  .notify h2 { margin: 0 0 8px; font-size: 1.35rem; }
+  .notify p { color: var(--dim); margin: 0 0 18px; }
+
+  footer { margin: 80px 0 0; padding: 28px 20px 44px; border-top: 1px solid var(--line);
+    text-align: center; color: var(--dim); font-size: .88rem; }
+  footer .links { margin-bottom: 10px; }
+  footer a { margin: 0 10px; }
+
+  @media (prefers-reduced-motion: reduce) { .snow { display: none; } .btn { transition: none; } }
+</style>
+</head>
+<body>
+<canvas class="snow" id="snow"></canvas>
+<div class="content">
+<main>
+
+  <section class="hero">
+    <img class="icon" src="assets/icon.png" alt="Gem Maze TD app icon" width="108" height="108">
+    <h1>Gem Maze TD</h1>
+    <p class="tag">The legendary <b>Gem TD</b> from Warcraft&nbsp;III and Dota, rebuilt from scratch —
+      <b>natively for iPhone&nbsp;&amp;&nbsp;iPad</b>. No ports, no ads-with-a-game-attached. The real thing.</p>
+    <span class="heritage">A faithful remake of the WC3 / Dota classic</span>
+    <div class="ctas">
+      <!-- TODO: replace #testflight with the public TestFlight link once Beta App Review approves -->
+      <a class="btn btn-beta" href="#testflight">Join the Beta on TestFlight</a>
+      <a class="btn btn-notify" href="#notify">Get notified at launch</a>
+    </div>
+    <p class="ctanote">Free beta · iPhone &amp; iPad · iOS 17+</p>
+  </section>
+
+  <section class="hook">
+    <h2>Your towers ARE the maze</h2>
+    <p>Each round, place <b>5 random gems</b> — then keep only <b>one</b>. The rest turn to stone
+      and become the walls of your labyrinth. Bad luck isn't wasted; it's bricks. Carve the longest,
+      cruelest road you can, then hold it for <b>50 waves</b>.</p>
+  </section>
+
+  <section class="shots" aria-label="Screenshots">
+    <img class="shot" src="assets/shot-combat.png" alt="A wave of creeps winding through a gem maze under fire">
+    <img class="shot shot-mid" src="assets/shot-codex.png" alt="The Codex listing the 8 base gems and their abilities">
+    <img class="shot" src="assets/shot-card.png" alt="A crafted tower's detail card with stats and abilities">
+  </section>
+
+  <section class="features">
+    <div class="feat"><div class="n">50</div><h3>Waves</h3><p>Flyers that ignore your walls, invisible stalkers, evasive tricksters, self-healing tanks — and bosses.</p></div>
+    <div class="feat"><div class="n">47</div><h3>Craftable towers</h3><p>Combine exact gem sets into elite towers — auras, chain lightning, poison, slows — true to the original recipes.</p></div>
+    <div class="feat"><div class="n">68</div><h3>Creeps in the bestiary</h3><p>Every wave is a hand-built creature with its own abilities, animations, and counters.</p></div>
+    <div class="feat"><div class="n">8</div><h3>Base gems</h3><p>Diamond hits like a truck but can't touch flyers. Opal sees the unseeable. Every choice matters.</p></div>
+    <div class="feat"><div class="n">3D</div><h3>Fully native</h3><p>Swift + SceneKit, built for Apple hardware. No web wrapper, no Unity bloat — launches instantly, runs cool.</p></div>
+    <div class="feat"><div class="n">0</div><h3>Ads. Zero.</h3><p>Single-player, offline-friendly, no energy timers. Just the game.</p></div>
+  </section>
+
+  <section class="story">
+    <h2>Why this game exists</h2>
+    <p>Gem TD is one of the most beloved custom maps ever made — born in Warcraft&nbsp;III, kept alive
+      for nearly two decades in the Dota&nbsp;2 Arcade. But it never had a real home on mobile.</p>
+    <p>This is that home: the <b>place-five-keep-one</b> heartbeat, the authentic crafting recipes,
+      the Dota-style aura stacking and deferred damage — rebuilt piece by piece and tuned by hand,
+      not ported. If you've ever kept a terrible gem just because the wall was in the perfect spot,
+      this was made for you.</p>
+  </section>
+
+  <section class="notify" id="notify">
+    <h2>Be first at the gates</h2>
+    <p>One email when the game hits the App Store. Nothing else, ever.</p>
+    <!-- KIT-FORM: paste the Kit (ConvertKit) embed snippet here once the account exists.
+         Until then this button mirrors the TestFlight CTA so the section stays functional. -->
+    <a class="btn btn-beta" href="#testflight">Play the beta instead →</a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="links">
+    <a href="#testflight">Beta</a> ·
+    <a href="privacy.html">Privacy</a> ·
+    <a href="mailto:support@gemmazetd.com">Support</a>
+  </div>
+  © 2026 Gem Maze TD. Not affiliated with Blizzard Entertainment or Valve.
+  Gem TD was created by the WC3/Dota custom-map community — this remake is a tribute.
+</footer>
+</div>
+
+<script>
+  // Faint drifting snow — the game's icy signature, kept subtle.
+  const c = document.getElementById('snow'), x = c.getContext('2d');
+  let W, H, flakes;
+  function size() {
+    W = c.width = innerWidth * devicePixelRatio; H = c.height = innerHeight * devicePixelRatio;
+    flakes = Array.from({length: Math.min(70, innerWidth / 12)}, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      r: (Math.random() * 1.6 + 0.6) * devicePixelRatio,
+      s: (Math.random() * 0.45 + 0.12) * devicePixelRatio,
+      w: Math.random() * 6.28, a: Math.random() * 0.35 + 0.1
+    }));
+  }
+  size(); addEventListener('resize', size);
+  (function tick() {
+    x.clearRect(0, 0, W, H); x.fillStyle = '#CFE6FF';
+    for (const f of flakes) {
+      f.y += f.s; f.w += 0.01; f.x += Math.sin(f.w) * 0.3 * devicePixelRatio;
+      if (f.y > H + 5) { f.y = -5; f.x = Math.random() * W; }
+      x.globalAlpha = f.a; x.beginPath(); x.arc(f.x, f.y, f.r, 0, 6.28); x.fill();
+    }
+    x.globalAlpha = 1; requestAnimationFrame(tick);
+  })();
+</script>
+</body>
+</html>
