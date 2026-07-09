@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B1626">
 <title>Gem Maze TD — the classic Gem TD, rebuilt for iPhone &amp; iPad</title>
 <meta name="description" content="A faithful native remake of the legendary WC3/Dota tower defense. Place 5 random gems, keep one — the rest become your maze. 50 waves, 47 craftable towers, iPhone & iPad.">
 <meta property="og:title" content="Gem Maze TD">
@@ -38,17 +39,21 @@
 
   /* TOP NAV — slim, sticky, shared with codex.html */
   .topnav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 18px;
-    padding: 10px 20px; border-bottom: 1px solid var(--line);
+    padding: 10px max(20px, env(safe-area-inset-right)) 10px max(20px, env(safe-area-inset-left));
+    border-bottom: 1px solid var(--line);
     background: rgba(11,22,38,.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
   .topnav .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text);
     text-decoration: none; font-size: 1.02rem; }
   .topnav .brand img { width: 30px; height: 30px; border-radius: 7px; }
-  .topnav a.link { color: var(--dim); text-decoration: none; font-weight: 600; font-size: .95rem; }
+  .topnav a.link { color: var(--dim); text-decoration: none; font-weight: 600; font-size: .95rem;
+    padding: 10px 2px; }
   .topnav a.link:hover, .topnav a.link.active { color: var(--frost); }
   .topnav .spacer { flex: 1; }
   .topnav .beta-pill { color: #06240F; background: linear-gradient(180deg, var(--go), var(--go-deep));
-    font-weight: 700; font-size: .88rem; text-decoration: none; padding: 8px 16px; border-radius: 99px; }
-  @media (max-width: 480px) { .topnav { gap: 12px; padding: 10px 14px; } .topnav .brand span { display: none; } }
+    font-weight: 700; font-size: .88rem; text-decoration: none; padding: 8px 16px; border-radius: 99px;
+    white-space: nowrap; }
+  @media (max-width: 480px) { .topnav { gap: 12px; padding-left: max(14px, env(safe-area-inset-left)); padding-right: max(14px, env(safe-area-inset-right)); } .topnav .brand span { display: none; } }
+  @media (max-width: 360px) { .topnav .nav-news { display: none; } }
 
   /* HERO */
   .hero { text-align: center; padding: 52px 0 30px; }
@@ -102,7 +107,7 @@
   .story p b { color: var(--text); }
 
   /* NOTIFY */
-  .notify { margin: 72px auto 0; max-width: 560px; text-align: center;
+  .notify { margin: 72px auto 0; max-width: 560px; text-align: center; scroll-margin-top: 72px;
     background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 34px 26px; }
   .notify h2 { margin: 0 0 8px; font-size: 1.35rem; }
   .notify p { color: var(--dim); margin: 0 0 18px; }
@@ -121,7 +126,7 @@
 <nav class="topnav">
   <a class="brand" href="index.html"><img src="assets/favicon.png" alt=""><span>Gem Maze TD</span></a>
   <a class="link" href="codex.html">Codex</a>
-  <a class="link" href="#notify">Launch news</a>
+  <a class="link nav-news" href="#notify">Launch news</a>
   <span class="spacer"></span>
   <a class="beta-pill" href="https://testflight.apple.com/join/R9X8shZE">Join the Beta</a>
 </nav>
@@ -200,27 +205,38 @@
 
 <script>
   // Faint drifting snow — the game's icy signature, kept subtle.
-  const c = document.getElementById('snow'), x = c.getContext('2d');
-  let W, H, flakes;
-  function size() {
-    W = c.width = innerWidth * devicePixelRatio; H = c.height = innerHeight * devicePixelRatio;
-    flakes = Array.from({length: Math.min(70, innerWidth / 12)}, () => ({
-      x: Math.random() * W, y: Math.random() * H,
-      r: (Math.random() * 1.6 + 0.6) * devicePixelRatio,
-      s: (Math.random() * 0.45 + 0.12) * devicePixelRatio,
-      w: Math.random() * 6.28, a: Math.random() * 0.35 + 0.1
-    }));
-  }
-  size(); addEventListener('resize', size);
-  (function tick() {
-    x.clearRect(0, 0, W, H); x.fillStyle = '#CFE6FF';
-    for (const f of flakes) {
-      f.y += f.s; f.w += 0.01; f.x += Math.sin(f.w) * 0.3 * devicePixelRatio;
-      if (f.y > H + 5) { f.y = -5; f.x = Math.random() * W; }
-      x.globalAlpha = f.a; x.beginPath(); x.arc(f.x, f.y, f.r, 0, 6.28); x.fill();
+  // Skipped entirely under prefers-reduced-motion (the canvas is hidden by CSS anyway).
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const c = document.getElementById('snow'), x = c.getContext('2d');
+    let W, H, flakes;
+    function size() {
+      const w = innerWidth * devicePixelRatio, h = innerHeight * devicePixelRatio;
+      // iOS Safari fires resize when the URL bar collapses during scroll —
+      // only rebuild the flakes when the width really changed, and just
+      // extend the field on height changes so the snow doesn't visibly jump.
+      if (w === W && h === H) return;
+      const widthChanged = w !== W;
+      W = c.width = w; H = c.height = h;
+      if (widthChanged || !flakes) {
+        flakes = Array.from({length: Math.min(70, innerWidth / 12)}, () => ({
+          x: Math.random() * W, y: Math.random() * H,
+          r: (Math.random() * 1.6 + 0.6) * devicePixelRatio,
+          s: (Math.random() * 0.45 + 0.12) * devicePixelRatio,
+          w: Math.random() * 6.28, a: Math.random() * 0.35 + 0.1
+        }));
+      }
     }
-    x.globalAlpha = 1; requestAnimationFrame(tick);
-  })();
+    size(); addEventListener('resize', size);
+    (function tick() {
+      x.clearRect(0, 0, W, H); x.fillStyle = '#CFE6FF';
+      for (const f of flakes) {
+        f.y += f.s; f.w += 0.01; f.x += Math.sin(f.w) * 0.3 * devicePixelRatio;
+        if (f.y > H + 5) { f.y = -5; f.x = Math.random() * W; }
+        x.globalAlpha = f.a; x.beginPath(); x.arc(f.x, f.y, f.r, 0, 6.28); x.fill();
+      }
+      x.globalAlpha = 1; requestAnimationFrame(tick);
+    })();
+  }
 </script>
 </body>
 </html>
