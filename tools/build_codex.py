@@ -87,15 +87,23 @@ page = f"""<!DOCTYPE html>
     font-family:"Avenir Next", Avenir, -apple-system, system-ui, sans-serif;
     background-image:radial-gradient(900px 400px at 50% -8%, #16304F 0%, transparent 60%); }}
   main {{ max-width:1020px; margin:0 auto; padding:0 16px 80px; }}
-  header {{ display:flex; align-items:center; gap:12px; padding:20px 0 6px; }}
-  header img {{ width:40px; height:40px; border-radius:9px; }}
-  header a {{ color:var(--dim); text-decoration:none; font-size:.9rem; }}
-  header a:hover {{ color:var(--frost); }}
+  .topnav {{ position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:18px;
+    padding:10px 20px; border-bottom:1px solid var(--line);
+    background:rgba(11,22,38,.78); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }}
+  .topnav .brand {{ display:flex; align-items:center; gap:10px; font-weight:800; color:var(--text);
+    text-decoration:none; font-size:1.02rem; }}
+  .topnav .brand img {{ width:30px; height:30px; border-radius:7px; }}
+  .topnav a.link {{ color:var(--dim); text-decoration:none; font-weight:600; font-size:.95rem; }}
+  .topnav a.link:hover, .topnav a.link.active {{ color:var(--frost); }}
+  .topnav .spacer {{ flex:1; }}
+  .topnav .beta-pill {{ color:#06240F; background:linear-gradient(180deg,#4ADE80,#16A34A);
+    font-weight:700; font-size:.88rem; text-decoration:none; padding:8px 16px; border-radius:99px; }}
+  @media (max-width:480px) {{ .topnav {{ gap:12px; padding:10px 14px; }} .topnav .brand span {{ display:none; }} }}
   h1 {{ font-size:2rem; font-weight:800; margin:10px 0 4px;
       background:linear-gradient(180deg,#FFF 20%,var(--frost) 90%);
       -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }}
   .sub {{ color:var(--dim); margin:0 0 18px; }}
-  nav.jump {{ position:sticky; top:0; z-index:5; display:flex; gap:8px; padding:10px 0;
+  nav.jump {{ position:sticky; top:52px; z-index:5; display:flex; gap:8px; padding:10px 0;
     background:linear-gradient(180deg, var(--bg) 75%, transparent); }}
   nav.jump a {{ color:var(--frost); text-decoration:none; font-weight:700; font-size:.9rem;
     border:1px solid var(--line); border-radius:99px; padding:6px 14px; background:var(--panel); }}
@@ -134,11 +142,14 @@ page = f"""<!DOCTYPE html>
 </style>
 </head>
 <body>
+<nav class="topnav">
+  <a class="brand" href="index.html"><img src="assets/favicon.png" alt=""><span>Gem Maze TD</span></a>
+  <a class="link active" href="codex.html">Codex</a>
+  <a class="link" href="index.html#notify">Launch news</a>
+  <span class="spacer"></span>
+  <a class="beta-pill" href="https://testflight.apple.com/join/R9X8shZE">Join the Beta</a>
+</nav>
 <main>
-  <header>
-    <img src="assets/favicon.png" alt="">
-    <a href="index.html">← Gem Maze TD</a>
-  </header>
   <h1>The Codex</h1>
   <p class="sub">Every gem, crafted tower, and creep — exported straight from the game's code, so these ARE the live numbers. DMG per hit · SPD in attacks/sec · RNG in board cells.</p>
   <nav class="jump">

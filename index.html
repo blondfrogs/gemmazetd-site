@@ -36,8 +36,22 @@
   .snow { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
   .content { position: relative; z-index: 1; }
 
+  /* TOP NAV — slim, sticky, shared with codex.html */
+  .topnav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 18px;
+    padding: 10px 20px; border-bottom: 1px solid var(--line);
+    background: rgba(11,22,38,.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .topnav .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text);
+    text-decoration: none; font-size: 1.02rem; }
+  .topnav .brand img { width: 30px; height: 30px; border-radius: 7px; }
+  .topnav a.link { color: var(--dim); text-decoration: none; font-weight: 600; font-size: .95rem; }
+  .topnav a.link:hover, .topnav a.link.active { color: var(--frost); }
+  .topnav .spacer { flex: 1; }
+  .topnav .beta-pill { color: #06240F; background: linear-gradient(180deg, var(--go), var(--go-deep));
+    font-weight: 700; font-size: .88rem; text-decoration: none; padding: 8px 16px; border-radius: 99px; }
+  @media (max-width: 480px) { .topnav { gap: 12px; padding: 10px 14px; } .topnav .brand span { display: none; } }
+
   /* HERO */
-  .hero { text-align: center; padding: 72px 0 30px; }
+  .hero { text-align: center; padding: 52px 0 30px; }
   .hero img.icon { width: 108px; height: 108px; border-radius: 24px;
     box-shadow: 0 10px 40px rgba(95,168,232,.35), 0 2px 8px rgba(0,0,0,.5); }
   h1 { font-size: clamp(2.1rem, 6vw, 3.2rem); font-weight: 800; letter-spacing: -.015em;
@@ -104,6 +118,13 @@
 <body>
 <canvas class="snow" id="snow"></canvas>
 <div class="content">
+<nav class="topnav">
+  <a class="brand" href="index.html"><img src="assets/favicon.png" alt=""><span>Gem Maze TD</span></a>
+  <a class="link" href="codex.html">Codex</a>
+  <a class="link" href="#notify">Launch news</a>
+  <span class="spacer"></span>
+  <a class="beta-pill" href="https://testflight.apple.com/join/R9X8shZE">Join the Beta</a>
+</nav>
 <main>
 
   <section class="hero">
