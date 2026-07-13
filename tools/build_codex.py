@@ -79,6 +79,14 @@ for c in creeps:
         f"<td class='num' data-label='HP'>{num(c['hp'])}</td><td class='num' data-label='Armor'>{num(c['armor'])}</td><td class='num' data-label='M-Res'>{mr}</td>"
         f"<td class='num' data-label='Speed'>{num(c['speed'])}</td><td class='traits{'' if chips else ' none'}'>{''.join(chips) or '—'}</td></tr>")
 
+# Creep-ability legend: name → description, exported from the live ability catalog (describeCreep),
+# so the site explains each trait chip with the same text and numbers as the in-app codex.
+ability_rows = [
+    f"<tr><td class='namecell' data-label='Ability'><span class='chip abil'>{esc(n)}</span></td>"
+    f"<td data-label='What it does'>{esc(d)}</td></tr>"
+    for n, d in sorted(cat.get("abilityInfo", {}).items())
+]
+
 counts = cat["counts"]
 page = f"""<!DOCTYPE html>
 <html lang="en">
@@ -218,6 +226,13 @@ page = f"""<!DOCTYPE html>
   <div class="tablewrap stack"><table>
     <tr class="head"><th>Wave</th><th>Creep</th><th>HP</th><th>Armor</th><th>M-Res</th><th>Speed</th><th>Traits</th></tr>
     {"".join(creep_rows)}
+  </table></div>
+
+  <h2 id="abilities">Creep Abilities</h2>
+  <p class="secsub">What each trait chip above actually does — parameters pulled straight from the live ability catalog.</p>
+  <div class="tablewrap stack"><table>
+    <tr class="head"><th>Ability</th><th>What it does</th></tr>
+    {"".join(ability_rows)}
   </table></div>
 
   <footer>
