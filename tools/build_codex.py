@@ -69,7 +69,7 @@ for c in creeps:
                          else f"<span class='chip leak'>Leak −{pct}% ♥</span>")
     if c["flying"]:      chips.append("<span class='chip tgt'>Flying</span>")
     if c["magicImmune"]: chips.append("<span class='chip magic'>Magic-Immune</span>")
-    if c["physImmune"]:  chips.append("<span class='chip phys'>Phys-Immune</span>")
+    if c["physImmune"]:  chips.append("<span class='chip phys'>Physical Resist</span>")
     chips += [f"<span class='chip abil'>{esc(a)}</span>" for a in c["abilities"]]
     waves = ", ".join(str(w) for w in c["waves"]) or "—"
     mr = f"{round(c['magicResist']*100)}%"
