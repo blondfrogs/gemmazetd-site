@@ -1,13 +1,13 @@
 {
   "abilityInfo" : {
     "Blink" : "At a corner, 30% chance to blink ~2 cells forward along its path, skipping past your maze.",
-    "Disarm" : "A point-blank aura: a tower it walks right beside can't fire while it's there. Counter with a Resist aura (Red Coral \/ Carmen-Lucia).",
+    "Disarm" : "A ~0.9-cell aura: a tower it walks right beside can't fire while it's there. Counter with a Resist aura (Red Coral \/ Carmen-Lucia).",
     "Evasion" : "50% chance to completely dodge a direct hit.",
-    "Invisible" : "Untargetable — walks past your towers unharmed unless a True-Sight gem (any Opal, or an Asteriated Ruby) reveals it.",
+    "Invisible" : "Untargetable — walks past your towers unharmed unless a True-Sight gem (any Opal, an Asteriated Ruby or Volcano, or a Star Sapphire) reveals it.",
     "Kraken-Shell" : "Its shell blocks 25% of every physical hit, and every 40000 damage it takes cracks the shell — purging all slows, stuns and shreds — then re-forms. Constant fire keeps it purging; leave it undamaged 10s and the counter resets.",
     "Reactive-Armor" : "Gains +5 armor per auto-attack that hits it — stacks up to 20, each fading after 8s.",
-    "Recharge" : "The first time it falls below 400 HP it sheds its debuffs — and for the next 6s ALL damage dealt to it heals it instead. Hold your fire! Anti-heal (Freezing Cold) blanks the healing.",
-    "Refraction" : "At a corner, 50% chance to raise a 3-charge shield — each charge fully blocks one incoming hit of ANY kind (attacks, cleave, lightning, burn ticks), and raising it clears its debuffs.",
+    "Recharge" : "The first time it drops to 25% health it sheds its debuffs — and for the next 6s ALL damage dealt to it heals it instead. Hold your fire! Anti-heal (Freezing Cold) blanks the healing.",
+    "Refraction" : "At a corner, 50% chance to raise a 3-charge shield — each charge fully blocks one incoming instance of damage of ANY kind (attacks, cleave, lightning, burn).",
     "Rush" : "After turning a corner, bursts to ×1.5 speed for 1.5s.",
     "Untouchable" : "A stronger silence (~2 cells): a tower it passes can't fire — and stays shut down ~2s after it leaves. A Resist aura still counters it."
   },
@@ -1733,7 +1733,7 @@
       ],
       "line" : "Silver → Diamond",
       "name" : "Huge Pink Diamond",
-      "range" : 4.7000000000000002,
+      "range" : 6.7000000000000002,
       "secret" : false,
       "slug" : "huge-pink-diamond"
     },
@@ -1792,7 +1792,7 @@
       "base" : "topaz",
       "blurb" : "irradiates up to 9 targets at once",
       "cooldown" : 0.5,
-      "damage" : 100,
+      "damage" : 120,
       "elite" : false,
       "ingredients" : [
         "Perfect Topaz",
@@ -1841,7 +1841,7 @@
     },
     {
       "base" : "ruby",
-      "blurb" : "burn 1: 80 magic\/s AoE",
+      "blurb" : "",
       "cooldown" : 0.5,
       "damage" : 0,
       "elite" : false,
@@ -1858,7 +1858,7 @@
     },
     {
       "base" : "ruby",
-      "blurb" : "burn 2: 400 magic\/s AoE",
+      "blurb" : "",
       "cooldown" : 0.5,
       "damage" : 0,
       "elite" : false,
@@ -1892,7 +1892,7 @@
     },
     {
       "base" : "ruby",
-      "blurb" : "25% forked lightning (10000×5) + burn 2: 400 magic\/s AoE",
+      "blurb" : "25% forked lightning (10000×5)",
       "cooldown" : 1,
       "damage" : 70,
       "elite" : false,
@@ -1909,7 +1909,7 @@
     },
     {
       "base" : "ruby",
-      "blurb" : "forked lightning + burn 3: 2500 magic\/s AoE + poison max",
+      "blurb" : "forked lightning + poison max",
       "cooldown" : 1,
       "damage" : 220,
       "elite" : true,
@@ -1962,7 +1962,7 @@
       "base" : "emerald",
       "blurb" : "poison 5 + MKB true-strike aura",
       "cooldown" : 0.5,
-      "damage" : 50,
+      "damage" : 80,
       "elite" : false,
       "ingredients" : [
         "Grey Jade",
@@ -2403,7 +2403,7 @@
     },
     {
       "base" : "ruby",
-      "blurb" : "burn 3: 2500 magic\/s AoE",
+      "blurb" : "",
       "cooldown" : 0.5,
       "damage" : 0,
       "elite" : true,
